@@ -17,9 +17,4 @@
     <Resource Include="Resources\imgs\billiardo game table magement.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-    <Folder Include="Services\Implementations\" />
-  </ItemGroup>
-
 </Project>
