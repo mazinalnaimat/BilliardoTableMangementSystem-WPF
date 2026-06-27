@@ -10,10 +10,16 @@
 
   <ItemGroup>
     <None Remove="billiardo game table magement.png" />
+    <None Remove="Views\billiardo game table magement.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="billiardo game table magement.png" />
+    <Resource Include="Resources\imgs\billiardo game table magement.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Services\Implementations\" />
   </ItemGroup>
 
 </Project>

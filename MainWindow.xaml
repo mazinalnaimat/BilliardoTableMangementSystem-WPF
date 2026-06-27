@@ -1,18 +1,18 @@
-﻿<Window x:Class="BilliardGameTablesManagement.MainWindow"
+﻿<Window xmlns:Views="clr-namespace:BilliardGameTablesManagement.Views"  x:Class="BilliardGameTablesManagement.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BilliardGameTablesManagement"
         mc:Ignorable="d"
-        Title="Billiardo Tables Mangement" Height="480" Width="800" ResizeMode="NoResize" Icon="/billiardo game table magement.png">
+        Title="Billiardo Tables Mangement" Height="480" Width="800" ResizeMode="NoResize" Icon="/Resources/imgs/billiardo game table magement.png" WindowStartupLocation="CenterScreen">
     <Grid>
-        <local:BilliardoTableMangement x:Name="btmTable1" HorizontalAlignment="Left" Margin="51,17,0,0" VerticalAlignment="Top" Height="144" Width="182"/>
-        <local:BilliardoTableMangement x:Name="btmTable2" HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" Height="144" Width="182" TableNumber="2"/>
-        <local:BilliardoTableMangement x:Name="btmTable3" HorizontalAlignment="Left" Margin="548,17,0,0" VerticalAlignment="Top" Height="144" Width="182" TableNumber="3"/>
-        <local:BilliardoTableMangement x:Name="btmTable4" HorizontalAlignment="Left" Margin="51,234,0,0" VerticalAlignment="Top" Height="144" Width="182" TableNumber="4"/>
-        <local:BilliardoTableMangement x:Name="btmTable5" HorizontalAlignment="Center" Margin="0,234,0,0" VerticalAlignment="Top" Height="144" Width="182" TableNumber="5"/>
-        <local:BilliardoTableMangement x:Name="btmTable6" HorizontalAlignment="Left" Margin="548,234,0,0" VerticalAlignment="Top" Height="144" Width="182" TableNumber="6"/>
+        <Views:BilliardTableView x:Name="btmTable1" HorizontalAlignment="Left" Margin="51,17,0,0" VerticalAlignment="Top" Height="144" Width="182"/>
+        <Views:BilliardTableView x:Name="btmTable2" HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" Height="144" Width="182" />
+        <Views:BilliardTableView x:Name="btmTable3" HorizontalAlignment="Left" Margin="548,17,0,0" VerticalAlignment="Top" Height="144" Width="182" />
+        <Views:BilliardTableView x:Name="btmTable4" HorizontalAlignment="Left" Margin="51,234,0,0" VerticalAlignment="Top" Height="144" Width="182" />
+        <Views:BilliardTableView x:Name="btmTable5" HorizontalAlignment="Center" Margin="0,234,0,0" VerticalAlignment="Top" Height="144" Width="182"/>
+        <Views:BilliardTableView x:Name="btmTable6" HorizontalAlignment="Left" Margin="548,234,0,0" VerticalAlignment="Top" Height="144" Width="182"/>
 
     </Grid>
 </Window>

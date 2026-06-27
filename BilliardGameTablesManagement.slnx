@@ -1,4 +1,3 @@
 <Solution>
-  <Project Path="../BGTM-BusinessLayer/BGTM-BusinessLayer.csproj" />
   <Project Path="BilliardGameTablesManagement.csproj" />
 </Solution>

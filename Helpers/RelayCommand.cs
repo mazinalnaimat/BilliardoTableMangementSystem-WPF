@@ -1,12 +1,12 @@
-﻿using System.Windows.Input;
+﻿
+using System.Windows.Input;
 
-namespace BilliardGameTablesManagement
+namespace BilliardGameTablesManagement.Helpers
 {
-    // A simple reusable RelayCommand (you can place it in a separate file)
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
-        private readonly Func<bool>?_canExecute;
+        private readonly Func<bool>? _canExecute;
 
         public RelayCommand(Action execute, Func<bool>? canExecute = null)
         {

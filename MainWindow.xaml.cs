@@ -1,27 +1,29 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using BilliardGameTablesManagement.ViewModels;  // <-- add this
 
 namespace BilliardGameTablesManagement
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
 
+            // Create ViewModels for each table
+            var table1VM = new BilliardTableViewModel { TableNumber = 1, RatePerHour = 10.0m };
+            var table2VM = new BilliardTableViewModel { TableNumber = 2, RatePerHour = 10.0m };
+            var table3VM = new BilliardTableViewModel { TableNumber = 3, RatePerHour = 10.0m };
+            var table4VM = new BilliardTableViewModel { TableNumber = 4, RatePerHour = 10.0m };
+            var table5VM = new BilliardTableViewModel { TableNumber = 5, RatePerHour = 12.0m };
+            var table6VM = new BilliardTableViewModel { TableNumber = 6, RatePerHour = 12.0m };
+
+            // Assign each ViewModel to the corresponding UserControl
+            btmTable1.DataContext = table1VM;
+            btmTable2.DataContext = table2VM;
+            btmTable3.DataContext = table3VM;
+            btmTable4.DataContext = table4VM;
+            btmTable5.DataContext = table5VM;
+            btmTable6.DataContext = table6VM;
+        }
     }
 }
