@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,6 +8,28 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!--
+    The layer projects are stored as subfolders under this WPF project folder.
+    SDK-style projects include **/*.cs by default, so without these Remove rules
+    the WPF project also compiles the Business/Domain/DataAccess source files
+    and their generated obj/*.AssemblyInfo.cs files. That causes duplicate
+    AssemblyVersionAttribute and TargetFrameworkAttribute build errors.
+  -->
+  <ItemGroup>
+    <Compile Remove="BilliardGameTablesManagement.Business\**" />
+    <Compile Remove="BilliardGameTablesManagement.DataAccess\**" />
+    <Compile Remove="BilliardGameTablesManagement.Domain\**" />
+    <EmbeddedResource Remove="BilliardGameTablesManagement.Business\**" />
+    <EmbeddedResource Remove="BilliardGameTablesManagement.DataAccess\**" />
+    <EmbeddedResource Remove="BilliardGameTablesManagement.Domain\**" />
+    <None Remove="BilliardGameTablesManagement.Business\**" />
+    <None Remove="BilliardGameTablesManagement.DataAccess\**" />
+    <None Remove="BilliardGameTablesManagement.Domain\**" />
+    <Page Remove="BilliardGameTablesManagement.Business\**" />
+    <Page Remove="BilliardGameTablesManagement.DataAccess\**" />
+    <Page Remove="BilliardGameTablesManagement.Domain\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="billiardo game table magement.png" />
     <None Remove="Views\billiardo game table magement.png" />
@@ -15,6 +37,12 @@
 
   <ItemGroup>
     <Resource Include="Resources\imgs\billiardo game table magement.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="BilliardGameTablesManagement.Business\BilliardGameTablesManagement.Business.csproj" />
+    <ProjectReference Include="BilliardGameTablesManagement.DataAccess\BilliardGameTablesManagement.DataAccess.csproj" />
+    <ProjectReference Include="BilliardGameTablesManagement.Domain\BilliardGameTablesManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>

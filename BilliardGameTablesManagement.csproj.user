@@ -2,10 +2,10 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Views\BilliardTableView.xaml.cs">
+    <Compile Update="Views\Controls\BilliardTableCardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StartWindow.xaml.cs">
+    <Compile Update="Views\Windows\StartWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
