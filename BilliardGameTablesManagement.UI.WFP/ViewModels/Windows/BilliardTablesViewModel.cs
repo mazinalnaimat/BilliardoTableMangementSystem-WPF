@@ -1,18 +1,18 @@
+using BilliardGameTablesManagement.Business.DTOs;
 using BilliardGameTablesManagement.Business.Interfaces;
-using BilliardGameTablesManagement.Domain.Entities;
 using BilliardGameTablesManagement.Services.Implementations;
 using BilliardGameTablesManagement.ViewModels.Controls;
 using System.Collections.ObjectModel;
 
 namespace BilliardGameTablesManagement.ViewModels.Windows
 {
-    public class MainViewModel : BaseViewModel
+    public class BilliardTablesViewModel : BaseViewModel
     {
         private readonly ITableSessionService _tableSessionService;
 
         public ObservableCollection<BilliardTableCardViewModel> Tables { get; }
 
-        public MainViewModel(ITableSessionService tableSessionService)
+        public BilliardTablesViewModel(ITableSessionService tableSessionService)
         {
             _tableSessionService = tableSessionService
                 ?? throw new ArgumentNullException(nameof(tableSessionService));
@@ -24,11 +24,11 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         private void LoadTables()
         {
-            IReadOnlyList<TableSession> sessions = _tableSessionService.GetTables();
+            IReadOnlyList<TableSessionDto> sessions = _tableSessionService.GetTables();
 
             Tables.Clear();
 
-            foreach (TableSession session in sessions)
+            foreach (TableSessionDto session in sessions)
             {
                 Tables.Add(new BilliardTableCardViewModel(
                     session,

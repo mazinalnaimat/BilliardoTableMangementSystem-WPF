@@ -1,11 +1,12 @@
 using BilliardGameTablesManagement.Domain.Entities;
 
-namespace BilliardGameTablesManagement.Domain.Interfaces
+namespace BilliardGameTablesManagement.Business.Interfaces
 {
     public interface ITableSessionRepository
     {
         IReadOnlyList<TableSession> GetTables();
 
+        TableSession? GetById(int id);
 
         void Add(TableSession session);
 

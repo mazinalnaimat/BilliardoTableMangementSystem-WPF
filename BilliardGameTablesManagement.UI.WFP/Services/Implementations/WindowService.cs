@@ -10,10 +10,10 @@ namespace BilliardGameTablesManagement.Services.Implementations
         public void ShowBilliardTablesWindow()
         {
             var tableSessionService = ApplicationServices.CreateTableSessionService();
-            var mainViewModel = new MainViewModel(tableSessionService);
-            var mainWindow = new MainWindow(mainViewModel);
+            var billiardTablesViewModel = new BilliardTablesViewModel(tableSessionService);
+            var billiardTablesWindow = new BilliardTablesWindow(billiardTablesViewModel);
 
-            mainWindow.Show();
+            billiardTablesWindow.Show();
         }
 
         public void CloseWindowByDataContext(object dataContext)

@@ -1,12 +1,10 @@
+using BilliardGameTablesManagement.Business.Interfaces;
 using BilliardGameTablesManagement.Domain.Entities;
-using BilliardGameTablesManagement.Domain.Interfaces;
 
 namespace BilliardGameTablesManagement.DataAccess.Repositories
 {
     public class TableSessionRepository : ITableSessionRepository
     {
-        
-
         private readonly List<TableSession> _sessions = new()
         {
             new TableSession { Id = 1, TableNumber = 1, RatePerHour = 10.0m },
@@ -19,15 +17,26 @@ namespace BilliardGameTablesManagement.DataAccess.Repositories
 
         public IReadOnlyList<TableSession> GetTables()
         {
-            // TODO: SELECT Id, TableNumber, RatePerHour, StartTime, AccumulatedTime, IsRunning FROM TableSessions
+            // TODO: Connect with database here.
+            // Example later: SELECT Id, TableNumber, RatePerHour, StartTime, AccumulatedTime, IsRunning FROM TableSessions
+
+            // Hardcoded in-memory data for now to preserve the current UI behavior while testing architecture.
             return _sessions;
         }
 
+        public TableSession? GetById(int id)
+        {
+            // TODO: Connect with database here.
+            // Example later: SELECT * FROM TableSessions WHERE Id = @Id
 
+            return _sessions.FirstOrDefault(session => session.Id == id);
+        }
 
         public void Add(TableSession session)
         {
-            // TODO: INSERT INTO TableSessions (...columns...) VALUES (...values...)
+            // TODO: Connect with database here.
+            // Example later: INSERT INTO TableSessions (...columns...) VALUES (...values...)
+
             if (session.Id == 0)
                 session.Id = _sessions.Count == 0 ? 1 : _sessions.Max(s => s.Id) + 1;
 
@@ -36,15 +45,20 @@ namespace BilliardGameTablesManagement.DataAccess.Repositories
 
         public void Update(TableSession session)
         {
-            // TODO: UPDATE TableSessions SET ... WHERE Id = @id
-            var existingSession = _sessions.FirstOrDefault(s => s.Id == session.Id);
+            // TODO: Connect with database here.
+            // Example later: UPDATE TableSessions SET ... WHERE Id = @Id
 
-            if (existingSession == null)
+            var existingIndex = _sessions.FindIndex(s => s.Id == session.Id);
+
+            if (existingIndex == -1)
             {
                 Add(session);
                 return;
             }
 
+            // The current in-memory repository returns the same object reference,
+            // so the session is already updated before this method is called.
+            _sessions[existingIndex] = session;
         }
     }
 }

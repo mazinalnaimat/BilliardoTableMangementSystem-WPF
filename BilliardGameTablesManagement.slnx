@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="BilliardGameTablesManagement.csproj" />
   <Project Path="BilliardGameTablesManagement.Domain\BilliardGameTablesManagement.Domain.csproj" />
   <Project Path="BilliardGameTablesManagement.Business\BilliardGameTablesManagement.Business.csproj" />
   <Project Path="BilliardGameTablesManagement.DataAccess\BilliardGameTablesManagement.DataAccess.csproj" />
+  <Project Path="BilliardGameTablesManagement.UI.WFP/BilliardGameTablesManagement.UI.WFP.csproj" />
 </Solution>

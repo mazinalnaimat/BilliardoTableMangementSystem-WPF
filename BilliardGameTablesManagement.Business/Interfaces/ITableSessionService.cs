@@ -1,15 +1,16 @@
-using BilliardGameTablesManagement.Domain.Entities;
+using BilliardGameTablesManagement.Business.DTOs;
+using BilliardGameTablesManagement.Business.Requests;
 
 namespace BilliardGameTablesManagement.Business.Interfaces
 {
     public interface ITableSessionService
     {
-        IReadOnlyList<TableSession> GetTables();
+        IReadOnlyList<TableSessionDto> GetTables();
 
-        void StartSession(TableSession session);
+        TableSessionDto StartSession(StartSessionRequest request);
 
-        void StopSession(TableSession session);
+        TableSessionDto StopSession(StopSessionRequest request);
 
-        void ResetSession(TableSession session);
+        TableSessionDto ResetSession(ResetSessionRequest request);
     }
 }

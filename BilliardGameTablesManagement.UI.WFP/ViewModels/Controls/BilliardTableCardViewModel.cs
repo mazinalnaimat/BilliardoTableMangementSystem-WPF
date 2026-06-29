@@ -1,5 +1,6 @@
+using BilliardGameTablesManagement.Business.DTOs;
 using BilliardGameTablesManagement.Business.Interfaces;
-using BilliardGameTablesManagement.Domain.Entities;
+using BilliardGameTablesManagement.Business.Requests;
 using BilliardGameTablesManagement.Helpers;
 using BilliardGameTablesManagement.Services.Interfaces;
 using System;
@@ -9,12 +10,12 @@ namespace BilliardGameTablesManagement.ViewModels.Controls
 {
     public class BilliardTableCardViewModel : BaseViewModel
     {
-        private readonly TableSession _session;
+        private TableSessionDto _session;
         private readonly ITimerService _timerService;
         private readonly ITableSessionService _tableSessionService;
 
         public BilliardTableCardViewModel(
-            TableSession session,
+            TableSessionDto session,
             ITimerService timerService,
             ITableSessionService tableSessionService)
         {
@@ -72,21 +73,35 @@ namespace BilliardGameTablesManagement.ViewModels.Controls
 
         private void Start()
         {
-            _tableSessionService.StartSession(_session);
+            _session = _tableSessionService.StartSession(new StartSessionRequest
+            {
+                SessionId = _session.Id,
+                TableNumber = _session.TableNumber,
+                RatePerHour = _session.RatePerHour
+            });
+
             _timerService.Start(TimeSpan.FromSeconds(1));
             RaiseAllChanged();
         }
 
         private void Stop()
         {
-            _tableSessionService.StopSession(_session);
+            _session = _tableSessionService.StopSession(new StopSessionRequest
+            {
+                SessionId = _session.Id
+            });
+
             _timerService.Stop();
             RaiseAllChanged();
         }
 
         private void Reset()
         {
-            _tableSessionService.ResetSession(_session);
+            _session = _tableSessionService.ResetSession(new ResetSessionRequest
+            {
+                SessionId = _session.Id
+            });
+
             _timerService.Stop();
             RaiseAllChanged();
         }

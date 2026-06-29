@@ -5,14 +5,14 @@ using System.Windows;
 
 namespace BilliardGameTablesManagement
 {
-    public partial class MainWindow : Window
+    public partial class BilliardTablesWindow : Window
     {
-        public MainWindow()
-            : this(new MainViewModel(ApplicationServices.CreateTableSessionService()))
+        public BilliardTablesWindow()
+            : this(new BilliardTablesViewModel(ApplicationServices.CreateTableSessionService()))
         {
         }
 
-        public MainWindow(MainViewModel viewModel)
+        public BilliardTablesWindow(BilliardTablesViewModel viewModel)
         {
             InitializeComponent();
 

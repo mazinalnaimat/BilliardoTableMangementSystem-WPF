@@ -36,13 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\imgs\billiardo game table magement.png" />
+    <ProjectReference Include="..\BilliardGameTablesManagement.Business\BilliardGameTablesManagement.Business.csproj" />
+    <ProjectReference Include="..\BilliardGameTablesManagement.DataAccess\BilliardGameTablesManagement.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="BilliardGameTablesManagement.Business\BilliardGameTablesManagement.Business.csproj" />
-    <ProjectReference Include="BilliardGameTablesManagement.DataAccess\BilliardGameTablesManagement.DataAccess.csproj" />
-    <ProjectReference Include="BilliardGameTablesManagement.Domain\BilliardGameTablesManagement.Domain.csproj" />
+    <Resource Include="Resources\imgs\billiardo game table magement.png" />
   </ItemGroup>
 
 </Project>
