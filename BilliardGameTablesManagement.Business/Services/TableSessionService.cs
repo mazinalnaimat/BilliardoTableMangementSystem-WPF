@@ -1,7 +1,7 @@
 using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Business.Interfaces;
+using BilliardGameTablesManagement.Business.Interfaces.Repos;
+using BilliardGameTablesManagement.Business.Interfaces.Serivces;
 using BilliardGameTablesManagement.Business.Mappers;
-using BilliardGameTablesManagement.Business.Requests;
 
 namespace BilliardGameTablesManagement.Business.Services
 {

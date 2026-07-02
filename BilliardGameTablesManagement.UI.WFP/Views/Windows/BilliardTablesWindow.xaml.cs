@@ -1,4 +1,4 @@
-using BilliardGameTablesManagement.Services;
+using BilliardGameTablesManagement.DependencyInjection;
 using BilliardGameTablesManagement.ViewModels.Windows;
 using System;
 using System.Windows;
@@ -8,7 +8,7 @@ namespace BilliardGameTablesManagement
     public partial class BilliardTablesWindow : Window
     {
         public BilliardTablesWindow()
-            : this(new BilliardTablesViewModel(ApplicationServices.CreateTableSessionService()))
+            : this(ApplicationServices.CreateBilliardTablesViewModel())
         {
         }
 

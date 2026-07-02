@@ -1,4 +1,4 @@
-namespace BilliardGameTablesManagement.Business.Requests
+namespace BilliardGameTablesManagement.Business.DTOs
 {
     public class StopSessionRequest
     {

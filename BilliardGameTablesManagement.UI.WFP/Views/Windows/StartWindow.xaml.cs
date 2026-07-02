@@ -1,5 +1,6 @@
-﻿using BilliardGameTablesManagement.Services.Implementations;
+using BilliardGameTablesManagement.DependencyInjection;
 using BilliardGameTablesManagement.ViewModels.Windows;
+using System;
 using System.Windows;
 
 namespace BilliardGameTablesManagement.Views
@@ -7,10 +8,16 @@ namespace BilliardGameTablesManagement.Views
     public partial class StartWindow : Window
     {
         public StartWindow()
+            : this(ApplicationServices.CreateStartViewModel())
+        {
+        }
+
+        public StartWindow(StartViewModel viewModel)
         {
             InitializeComponent();
 
-            DataContext = new StartViewModel(new WindowService());
+            DataContext = viewModel
+                ?? throw new ArgumentNullException(nameof(viewModel));
         }
     }
 }

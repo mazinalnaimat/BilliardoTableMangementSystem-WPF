@@ -1,6 +1,5 @@
 using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Business.Interfaces;
-using BilliardGameTablesManagement.Business.Requests;
+using BilliardGameTablesManagement.Business.Interfaces.Serivces;
 using BilliardGameTablesManagement.Helpers;
 using BilliardGameTablesManagement.Services.Interfaces;
 using System;

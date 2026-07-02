@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using BilliardGameTablesManagement.Views;
+using BilliardGameTablesManagement.DependencyInjection;
+using System.Windows;
 
 namespace BilliardGameTablesManagement
 {
@@ -8,7 +8,8 @@ namespace BilliardGameTablesManagement
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var startWindow = new StartWindow();
+
+            var startWindow = ApplicationServices.CreateStartWindow();
             startWindow.Show();
         }
     }

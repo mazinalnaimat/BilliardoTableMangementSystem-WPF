@@ -24,7 +24,7 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         private void StartProgram()
         {
-            _windowService.ShowBilliardTablesWindow();
+            _windowService.ShowLoginWindow();
             _windowService.CloseWindowByDataContext(this);
         }
 

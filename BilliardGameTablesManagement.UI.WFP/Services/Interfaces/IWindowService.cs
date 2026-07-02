@@ -2,6 +2,8 @@
 {
     public interface IWindowService
     {
+        void ShowLoginWindow();
+
         void ShowBilliardTablesWindow();
 
         void CloseWindowByDataContext(object dataContext);

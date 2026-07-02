@@ -1,4 +1,4 @@
-using BilliardGameTablesManagement.Business.Interfaces;
+using BilliardGameTablesManagement.Business.Interfaces.Repos;
 using BilliardGameTablesManagement.Domain.Entities;
 
 namespace BilliardGameTablesManagement.DataAccess.Repositories

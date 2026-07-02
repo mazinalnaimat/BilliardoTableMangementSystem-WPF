@@ -1,7 +1,6 @@
 using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Business.Requests;
 
-namespace BilliardGameTablesManagement.Business.Interfaces
+namespace BilliardGameTablesManagement.Business.Interfaces.Serivces
 {
     public interface ITableSessionService
     {

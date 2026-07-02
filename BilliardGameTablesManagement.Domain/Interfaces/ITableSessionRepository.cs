@@ -1,6 +1,6 @@
 using BilliardGameTablesManagement.Domain.Entities;
 
-namespace BilliardGameTablesManagement.Business.Interfaces
+namespace BilliardGameTablesManagement.Business.Interfaces.Repos
 {
     public interface ITableSessionRepository
     {
