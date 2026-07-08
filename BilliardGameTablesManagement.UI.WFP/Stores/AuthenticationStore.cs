@@ -16,6 +16,8 @@ namespace BilliardGameTablesManagement.Stores
 
         public LoginResultDto? CurrentUser { get; private set; }
 
+        public UserInfoModel? CurrentUserInfo { get; private set; }
+
         public LoginResultDto Login(LoginModel login)
         {
             if (login == null)
@@ -28,6 +30,7 @@ namespace BilliardGameTablesManagement.Stores
             });
 
             CurrentUser = result.Success ? result : null;
+            CurrentUserInfo = result.Success ? UserInfoModel.FromLoginResult(result) : null;
 
             return result;
         }
@@ -35,6 +38,7 @@ namespace BilliardGameTablesManagement.Stores
         public void Logout()
         {
             CurrentUser = null;
+            CurrentUserInfo = null;
         }
     }
 }

@@ -68,6 +68,16 @@ namespace BilliardGameTablesManagement.Business.Services
                 Message = "Login successful.",
                 UserId = user.UserId,
                 Username = user.Username,
+                PersonId = user.PersonId,
+                ActiveUserId = user.ActiveUserId,
+                NationalityNumber = user.NationalityNum,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DoB,
+                Gender = user.Gender.ToString(),
+                Email = user.Email,
+                Phone = user.Phone,
+                Address = user.Address,
             };
         }
 

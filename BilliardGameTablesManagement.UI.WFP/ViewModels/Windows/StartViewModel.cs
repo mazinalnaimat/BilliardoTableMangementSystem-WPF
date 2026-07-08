@@ -1,5 +1,6 @@
 using BilliardGameTablesManagement.Commands;
 using BilliardGameTablesManagement.Services.Interfaces;
+using BilliardGameTablesManagement.UI.WFP.Commands;
 using System;
 using System.Windows.Input;
 

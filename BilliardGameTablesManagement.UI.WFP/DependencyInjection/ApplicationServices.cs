@@ -30,7 +30,10 @@ namespace BilliardGameTablesManagement.DependencyInjection
             _authService ??= CreateAuthService();
 
         public static IWindowService WindowService =>
-            _windowService ??= new Services.Implementations.BilliardTablesWindowService(CreateLoginWindow, CreateBilliardTablesWindow);
+            _windowService ??= new Services.Implementations.BilliardTablesWindowService(
+                CreateLoginWindow,
+                CreateBilliardTablesWindow,
+                CreateUserInfoWindow);
 
         public static INavigationService NavigationService =>
             _navigationService ??= new WindowNavigationService(NavigationStore, WindowService);
@@ -60,6 +63,11 @@ namespace BilliardGameTablesManagement.DependencyInjection
             return new BilliardTablesWindow(CreateBilliardTablesViewModel());
         }
 
+        public static UserInfoWindow CreateUserInfoWindow()
+        {
+            return new UserInfoWindow(CreateUserInfoViewModel());
+        }
+
         public static StartViewModel CreateStartViewModel()
         {
             return new StartViewModel(NavigationService);
@@ -74,7 +82,17 @@ namespace BilliardGameTablesManagement.DependencyInjection
         {
             return new BilliardTablesViewModel(
                 TableSessionStore,
+                AuthenticationStore,
+                WindowService,
                 () => new DispatcherTimerService());
+        }
+
+        public static UserInfoViewModel CreateUserInfoViewModel()
+        {
+            var userInfo = AuthenticationStore.CurrentUserInfo
+                ?? new Models.UserInfoModel { Username = "Unknown" };
+
+            return new UserInfoViewModel(userInfo, WindowService);
         }
 
         private static ITableSessionService CreateTableSessionService()

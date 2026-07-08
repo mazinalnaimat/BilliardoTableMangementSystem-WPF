@@ -2,6 +2,7 @@ using BilliardGameTablesManagement.Commands;
 using BilliardGameTablesManagement.Models;
 using BilliardGameTablesManagement.Services.Interfaces;
 using BilliardGameTablesManagement.Stores;
+using BilliardGameTablesManagement.UI.WFP.Commands.TableSession;
 using System;
 using System.Windows.Input;
 

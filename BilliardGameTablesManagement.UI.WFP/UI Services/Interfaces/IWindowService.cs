@@ -6,6 +6,8 @@
 
         void ShowBilliardTablesWindow();
 
+        void ShowUserInfoWindow();
+
         void CloseWindowByDataContext(object dataContext);
 
         void Shutdown();
