@@ -1,7 +1,7 @@
-using BilliardGameTablesManagement.Business.Interfaces;
-using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Helpers;
+using BilliardGameTablesManagement.Commands;
+using BilliardGameTablesManagement.Models;
 using BilliardGameTablesManagement.Services.Interfaces;
+using BilliardGameTablesManagement.Stores;
 using System;
 using System.Windows.Input;
 
@@ -9,22 +9,19 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly IAuthService _authService;
-        private readonly IWindowService _windowService;
-
-        private string _username = string.Empty;
-        private string _password = string.Empty;
         private string _errorMessage = string.Empty;
         private string _usernameError = string.Empty;
         private string _passwordError = string.Empty;
 
+        internal LoginModel Login { get; } = new();
+
         public string Username
         {
-            get => _username;
+            get => Login.Username;
             set
             {
-                _username = value;
-                if (!string.IsNullOrWhiteSpace(_username))
+                Login.Username = value;
+                if (!string.IsNullOrWhiteSpace(Login.Username))
                 {
                     UsernameError = string.Empty;
                 }
@@ -36,11 +33,11 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         public string Password
         {
-            get => _password;
+            get => Login.Password;
             set
             {
-                _password = value;
-                if (!string.IsNullOrWhiteSpace(_password))
+                Login.Password = value;
+                if (!string.IsNullOrWhiteSpace(Login.Password))
                 {
                     PasswordError = string.Empty;
                 }
@@ -91,39 +88,18 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(IAuthService authService, IWindowService windowService)
+        public LoginViewModel(AuthenticationStore authenticationStore, INavigationService navigationService)
         {
-            _authService = authService
-                ?? throw new ArgumentNullException(nameof(authService));
+            if (authenticationStore == null)
+                throw new ArgumentNullException(nameof(authenticationStore));
 
-            _windowService = windowService
-                ?? throw new ArgumentNullException(nameof(windowService));
+            if (navigationService == null)
+                throw new ArgumentNullException(nameof(navigationService));
 
-            LoginCommand = new RelayCommand(Login);
+            LoginCommand = new LoginCommand(this, authenticationStore, navigationService);
         }
 
-        private void Login()
-        {
-            if (!ValidateLoginInput())
-                return;
-
-            var result = _authService.Login(new LoginRequest
-            {
-                Username = Username,
-                Password = Password
-            });
-
-            if (!result.Success)
-            {
-                ErrorMessage = result.Message;
-                return;
-            }
-
-            _windowService.ShowBilliardTablesWindow();
-            _windowService.CloseWindowByDataContext(this);
-        }
-
-        private bool ValidateLoginInput()
+        internal bool ValidateLoginInput()
         {
             UsernameError = string.Empty;
             PasswordError = string.Empty;

@@ -6,6 +6,7 @@ using BilliardGameTablesManagement.DataAccess.Repositories;
 using BilliardGameTablesManagement.Domain.Interfaces;
 using BilliardGameTablesManagement.Services.Implementations;
 using BilliardGameTablesManagement.Services.Interfaces;
+using BilliardGameTablesManagement.Stores;
 using BilliardGameTablesManagement.ViewModels.Windows;
 using BilliardGameTablesManagement.Views;
 using BilliardGameTablesManagement.Views.Windows;
@@ -17,6 +18,10 @@ namespace BilliardGameTablesManagement.DependencyInjection
         private static ITableSessionService? _tableSessionService;
         private static IAuthService? _authService;
         private static IWindowService? _windowService;
+        private static INavigationService? _navigationService;
+        private static AuthenticationStore? _authenticationStore;
+        private static NavigationStore? _navigationStore;
+        private static TableSessionStore? _tableSessionStore;
 
         public static ITableSessionService TableSessionService =>
             _tableSessionService ??= CreateTableSessionService();
@@ -27,8 +32,21 @@ namespace BilliardGameTablesManagement.DependencyInjection
         public static IWindowService WindowService =>
             _windowService ??= new Services.Implementations.BilliardTablesWindowService(CreateLoginWindow, CreateBilliardTablesWindow);
 
+        public static INavigationService NavigationService =>
+            _navigationService ??= new WindowNavigationService(NavigationStore, WindowService);
+
+        public static AuthenticationStore AuthenticationStore =>
+            _authenticationStore ??= new AuthenticationStore(AuthService);
+
+        public static NavigationStore NavigationStore =>
+            _navigationStore ??= new NavigationStore();
+
+        public static TableSessionStore TableSessionStore =>
+            _tableSessionStore ??= new TableSessionStore(TableSessionService);
+
         public static StartWindow CreateStartWindow()
         {
+            NavigationStore.NavigateTo(NavigationRoute.Start);
             return new StartWindow(CreateStartViewModel());
         }
 
@@ -44,18 +62,18 @@ namespace BilliardGameTablesManagement.DependencyInjection
 
         public static StartViewModel CreateStartViewModel()
         {
-            return new StartViewModel(WindowService);
+            return new StartViewModel(NavigationService);
         }
 
         public static LoginViewModel CreateLoginViewModel()
         {
-            return new LoginViewModel(AuthService, WindowService);
+            return new LoginViewModel(AuthenticationStore, NavigationService);
         }
 
         public static BilliardTablesViewModel CreateBilliardTablesViewModel()
         {
             return new BilliardTablesViewModel(
-                TableSessionService,
+                TableSessionStore,
                 () => new DispatcherTimerService());
         }
 

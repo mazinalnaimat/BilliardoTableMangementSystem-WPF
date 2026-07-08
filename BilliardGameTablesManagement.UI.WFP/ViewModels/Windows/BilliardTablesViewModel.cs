@@ -1,19 +1,16 @@
-using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Business.Interfaces.Serivces;
 using BilliardGameTablesManagement.Services.Interfaces;
+using BilliardGameTablesManagement.Stores;
 using BilliardGameTablesManagement.ViewModels.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
 
 namespace BilliardGameTablesManagement.ViewModels.Windows
 {
     public class BilliardTablesViewModel : BaseViewModel
     {
-        private readonly ITableSessionService _tableSessionService;
+        private readonly TableSessionStore _tableSessionStore;
         private readonly Func<ITimerService> _timerServiceFactory;
-        private readonly DispatcherTimer _clockTimer;
+        private readonly ITimerService _clockTimerService;
 
         private string _currentTime = string.Empty;
 
@@ -30,11 +27,11 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
         public ObservableCollection<BilliardTableCardViewModel> Tables { get; }
 
         public BilliardTablesViewModel(
-            ITableSessionService tableSessionService,
+            TableSessionStore tableSessionStore,
             Func<ITimerService> timerServiceFactory)
         {
-            _tableSessionService = tableSessionService
-                ?? throw new ArgumentNullException(nameof(tableSessionService));
+            _tableSessionStore = tableSessionStore
+                ?? throw new ArgumentNullException(nameof(tableSessionStore));
 
             _timerServiceFactory = timerServiceFactory
                 ?? throw new ArgumentNullException(nameof(timerServiceFactory));
@@ -45,13 +42,9 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
             CurrentTime = DateTime.Now.ToString("HH:mm:ss");
 
-            _clockTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-
-            _clockTimer.Tick += ClockTimer_Tick;
-            _clockTimer.Start();
+            _clockTimerService = _timerServiceFactory();
+            _clockTimerService.Tick += ClockTimer_Tick;
+            _clockTimerService.Start(TimeSpan.FromSeconds(1));
         }
 
         private void ClockTimer_Tick(object? sender, EventArgs e)
@@ -61,16 +54,16 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         private void LoadTables()
         {
-            IReadOnlyList<TableSessionDto> sessions = _tableSessionService.GetTables();
+            _tableSessionStore.LoadTables();
 
             Tables.Clear();
 
-            foreach (TableSessionDto session in sessions)
+            foreach (var session in _tableSessionStore.Sessions)
             {
                 Tables.Add(new BilliardTableCardViewModel(
                     session,
                     _timerServiceFactory(),
-                    _tableSessionService));
+                    _tableSessionStore));
             }
         }
     }

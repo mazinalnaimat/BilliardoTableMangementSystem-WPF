@@ -1,7 +1,7 @@
-using BilliardGameTablesManagement.Business.DTOs;
-using BilliardGameTablesManagement.Business.Interfaces.Serivces;
-using BilliardGameTablesManagement.Helpers;
+using BilliardGameTablesManagement.Commands;
+using BilliardGameTablesManagement.Models;
 using BilliardGameTablesManagement.Services.Interfaces;
+using BilliardGameTablesManagement.Stores;
 using System;
 using System.Windows.Input;
 
@@ -9,25 +9,28 @@ namespace BilliardGameTablesManagement.ViewModels.Controls
 {
     public class BilliardTableCardViewModel : BaseViewModel
     {
-        private TableSessionDto _session;
+        private readonly TableSessionModel _session;
         private readonly ITimerService _timerService;
-        private readonly ITableSessionService _tableSessionService;
 
         public BilliardTableCardViewModel(
-            TableSessionDto session,
+            TableSessionModel session,
             ITimerService timerService,
-            ITableSessionService tableSessionService)
+            TableSessionStore tableSessionStore)
         {
             _session = session ?? throw new ArgumentNullException(nameof(session));
             _timerService = timerService ?? throw new ArgumentNullException(nameof(timerService));
-            _tableSessionService = tableSessionService ?? throw new ArgumentNullException(nameof(tableSessionService));
+
+            if (tableSessionStore == null)
+                throw new ArgumentNullException(nameof(tableSessionStore));
 
             _timerService.Tick += OnTimerTick;
 
-            StartCommand = new RelayCommand(Start, () => !_session.IsRunning);
-            StopCommand = new RelayCommand(Stop, () => _session.IsRunning);
-            ResetCommand = new RelayCommand(Reset);
+            StartCommand = new StartTableSessionCommand(this, tableSessionStore, _timerService);
+            StopCommand = new StopTableSessionCommand(this, tableSessionStore, _timerService);
+            ResetCommand = new ResetTableSessionCommand(this, tableSessionStore, _timerService);
         }
+
+        internal TableSessionModel Session => _session;
 
         public int TableNumber
         {
@@ -70,41 +73,6 @@ namespace BilliardGameTablesManagement.ViewModels.Controls
 
         public ICommand ResetCommand { get; }
 
-        private void Start()
-        {
-            _session = _tableSessionService.StartSession(new StartSessionRequest
-            {
-                SessionId = _session.Id,
-                TableNumber = _session.TableNumber,
-                RatePerHour = _session.RatePerHour
-            });
-
-            _timerService.Start(TimeSpan.FromSeconds(1));
-            RaiseAllChanged();
-        }
-
-        private void Stop()
-        {
-            _session = _tableSessionService.StopSession(new StopSessionRequest
-            {
-                SessionId = _session.Id
-            });
-
-            _timerService.Stop();
-            RaiseAllChanged();
-        }
-
-        private void Reset()
-        {
-            _session = _tableSessionService.ResetSession(new ResetSessionRequest
-            {
-                SessionId = _session.Id
-            });
-
-            _timerService.Stop();
-            RaiseAllChanged();
-        }
-
         private void OnTimerTick(object? sender, EventArgs e)
         {
             if (_session.IsRunning)
@@ -114,8 +82,15 @@ namespace BilliardGameTablesManagement.ViewModels.Controls
             }
         }
 
+        internal void NotifySessionChanged()
+        {
+            RaiseAllChanged();
+        }
+
         private void RaiseAllChanged()
         {
+            OnPropertyChanged(nameof(TableNumber));
+            OnPropertyChanged(nameof(RatePerHour));
             OnPropertyChanged(nameof(ElapsedTime));
             OnPropertyChanged(nameof(CurrentCost));
             OnPropertyChanged(nameof(IsRunning));
