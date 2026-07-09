@@ -84,6 +84,7 @@ namespace BilliardGameTablesManagement.DependencyInjection
                 TableSessionStore,
                 AuthenticationStore,
                 WindowService,
+                NavigationService,
                 () => new DispatcherTimerService());
         }
 

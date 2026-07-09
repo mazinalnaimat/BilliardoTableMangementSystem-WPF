@@ -36,10 +36,13 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
 
         public ICommand ShowUserInfoCommand { get; }
 
+        public ICommand LogoutCommand { get; }
+
         public BilliardTablesViewModel(
             TableSessionStore tableSessionStore,
             AuthenticationStore authenticationStore,
             IWindowService windowService,
+            INavigationService navigationService,
             Func<ITimerService> timerServiceFactory)
         {
             _tableSessionStore = tableSessionStore
@@ -51,11 +54,15 @@ namespace BilliardGameTablesManagement.ViewModels.Windows
             if (windowService == null)
                 throw new ArgumentNullException(nameof(windowService));
 
+            if (navigationService == null)
+                throw new ArgumentNullException(nameof(navigationService));
+
             _timerServiceFactory = timerServiceFactory
                 ?? throw new ArgumentNullException(nameof(timerServiceFactory));
 
             Tables = new ObservableCollection<BilliardTableCardViewModel>();
             ShowUserInfoCommand = new ShowUserInfoCommand(_authenticationStore, windowService);
+            LogoutCommand = new LogoutCommand(this, _authenticationStore, navigationService);
 
             LoadTables();
 

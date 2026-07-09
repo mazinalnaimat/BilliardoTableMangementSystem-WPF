@@ -96,6 +96,11 @@
                     <Button Content="User Info"
                             Command="{Binding ShowUserInfoCommand}"
                             Style="{StaticResource HeaderButtonStyle}"/>
+
+                    <Button Content="Log out"
+                            Command="{Binding LogoutCommand}"
+                            Style="{StaticResource HeaderButtonStyle}"
+                            Margin="8,0,0,0"/>
                 </StackPanel>
             </Grid>
         </Border>

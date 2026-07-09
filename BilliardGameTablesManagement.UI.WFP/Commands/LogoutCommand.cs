@@ -1,18 +1,17 @@
-using BilliardGameTablesManagement.Business.DTOs;
 using BilliardGameTablesManagement.Services.Interfaces;
 using BilliardGameTablesManagement.Stores;
 using BilliardGameTablesManagement.ViewModels.Windows;
 
 namespace BilliardGameTablesManagement.Commands
 {
-    public class LoginCommand : CommandBase
+    public class LogoutCommand : CommandBase
     {
-        private readonly LoginViewModel _viewModel;
+        private readonly BilliardTablesViewModel _viewModel;
         private readonly AuthenticationStore _authenticationStore;
         private readonly INavigationService _navigationService;
 
-        public LoginCommand(
-            LoginViewModel viewModel,
+        public LogoutCommand(
+            BilliardTablesViewModel viewModel,
             AuthenticationStore authenticationStore,
             INavigationService navigationService)
         {
@@ -26,20 +25,16 @@ namespace BilliardGameTablesManagement.Commands
                 ?? throw new ArgumentNullException(nameof(navigationService));
         }
 
+        public override bool CanExecute(object? parameter)
+        {
+            return _authenticationStore.CurrentUser != null
+                || _authenticationStore.CurrentUserInfo != null;
+        }
+
         public override void Execute(object? parameter)
         {
-            if (!_viewModel.ValidateLoginInput())
-                return;
-
-            LoginResultDto result = _authenticationStore.Login(_viewModel.Login);
-
-            if (!result.Success)
-            {
-                _viewModel.ErrorMessage = result.Message;
-                return;
-            }
-
-            _navigationService.NavigateToBilliardTables(_viewModel);
+            _authenticationStore.Logout();
+            _navigationService.NavigateToLogin(_viewModel);
         }
     }
 }
